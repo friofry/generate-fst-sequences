@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="tools.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <b>Count</b>:
+    <p>
+        <input id="count">
+    </p>
+
+    <b>Length</b>:
+    <p>
+        <input id="length">
+    </p>
+    <b>Motif</b>:
+    <p>
+        <input id="motif">
+    </p>
+    <b>Occurence</b>:
+    <p>
+        <input id="occurence">
+    </p>
+    <input id="complementary" type="checkbox" >Complementary </input>
+    <p><b>Sequences:</b> <button onclick="copySeqs()">Copy</button> <i id="statuscopy"></i></p>
+    <div style="float: left;">
+      <pre id="result"></pre>
+    </div>
+
+    <div>
+
+    <script language="JavaScript">
+        function copySeqs() {
+            var str = document.getElementById("result").textContent;
+            copyToClipboard(str)
+            document.getElementById("statuscopy").innerHTML = "copied";
+        }
+
+        function generate() {
+            const count = document.getElementById("count").value
+            const length = document.getElementById("length").value
+            const motif = document.getElementById("motif").value
+            const occurence = document.getElementById("occurence").value
+            const compl = document.getElementById("complementary").checked
+
+            var sequences = gen_seq(count, length, motif, occurence, compl)
+            const result = document.getElementById("result")
+            document.getElementById("statuscopy").innerHTML = "";
+            result.innerHTML = sequences
+        }
+        // Count
+
+        function init() {
+            var countElement = document.getElementById("count");
+            countElement.addEventListener('input', generate)
+
+            var lenInput = document.getElementById("length");
+            lenInput.addEventListener('input', generate)
+
+            var motifInput = document.getElementById("motif");
+            motifInput.addEventListener('input', generate)
+
+            var occInput = document.getElementById("occurence");
+            occInput.addEventListener('input', generate);
+
+            var complInput = document.getElementById("complementary");
+            complInput.addEventListener('input', generate)
+        }
+
+        init();
+
+    </script>
+</body>
+</html>
